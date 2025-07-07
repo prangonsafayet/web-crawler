@@ -5,6 +5,7 @@ import (
 
 	"github.com/safayetprangon/web-crawler/backend/config"
 	"github.com/safayetprangon/web-crawler/backend/models"
+	"github.com/safayetprangon/web-crawler/backend/router"
 )
 
 func main() {
@@ -13,8 +14,10 @@ func main() {
 	// Auto-migrate tables
 	config.DB.AutoMigrate(&models.URL{}, &models.Result{}, &models.Link{})
 
+	r := router.SetupRouter()
 	port := os.Getenv("DB_PORT")
 	if port == "" {
 		port = "8080"
 	}
+	r.Run(":" + port)
 }
