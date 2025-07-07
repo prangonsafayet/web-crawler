@@ -1,0 +1,85 @@
+# ========================
+# macOS System Files
+# ========================
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ========================
+# Editor Settings
+# ========================
+
+# VSCode
+.vscode/
+
+# WebStorm / JetBrains IDEs
+.idea/
+*.iml
+
+# ========================
+# Node.js (in case top-level Node modules or tooling is used)
+# ========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+.pnpm-debug.log
+
+# ========================
+# General Logs and Env Files
+# ========================
+.env
+.env.*
+*.log
+logs/
+*.pid
+
+# ========================
+# React Frontend: frontend/
+# ========================
+frontend/node_modules/
+frontend/.next/
+frontend/dist/
+frontend/build/
+frontend/.env
+frontend/.env.* 
+frontend/coverage/
+frontend/.parcel-cache/
+frontend/.turbo/
+frontend/public/build/
+frontend/.eslintcache
+
+# Optional: ignore compiled Tailwind or PostCSS output if generated
+frontend/src/**/*.css
+!frontend/src/**/*.tailwind.css
+
+# ========================
+# Go Backend: backend/
+# ========================
+backend/bin/
+backend/pkg/
+backend/vendor/
+backend/go.sum
+backend/go.mod~
+backend/.env
+backend/*.log
+
+# Go build output
+backend/*.exe
+backend/*.exe~
+backend/*.out
+backend/*.test
+
+# Go workspace settings
+backend/.vscode/
+backend/.idea/
+
+# ========================
+# Misc
+# ========================
+*.swp
+*.swo
+*~
