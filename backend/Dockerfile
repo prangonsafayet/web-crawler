@@ -1,4 +1,4 @@
-FROM golang:1.22-alpine
+FROM golang:1.24.4-alpine
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ COPY . .
 RUN go mod vendor
 ENV GOFLAGS="-mod=vendor"
 
-RUN go build -o main .
+RUN go build -o main ./cmd
 
 EXPOSE 8080
 CMD ["./main"]

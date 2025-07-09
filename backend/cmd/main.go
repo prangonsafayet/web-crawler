@@ -18,7 +18,7 @@ func main() {
 	crawler.Start()
 
 	r := router.SetupRouter()
-	port := os.Getenv("DB_PORT")
+	port := os.Getenv("8080")
 	if port == "" {
 		port = "8080"
 	}
