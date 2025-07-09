@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/safayetprangon/web-crawler/backend/config"
+	"github.com/safayetprangon/web-crawler/backend/crawler"
 	"github.com/safayetprangon/web-crawler/backend/models"
 	"github.com/safayetprangon/web-crawler/backend/router"
 )
@@ -13,6 +14,8 @@ func main() {
 
 	// Auto-migrate tables
 	config.DB.AutoMigrate(&models.URL{}, &models.Result{}, &models.Link{})
+
+	crawler.Start()
 
 	r := router.SetupRouter()
 	port := os.Getenv("DB_PORT")
