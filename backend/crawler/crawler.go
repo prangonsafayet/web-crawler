@@ -97,13 +97,13 @@ func crawl(u models.URL) {
 }
 
 func getStatus(url string) int {
-	res, err := http.Head(url)
+	res, err := http.Get(url)
 	if err != nil {
 		return 500
 	}
+	defer res.Body.Close()
 	return res.StatusCode
 }
-
 func getHTMLVersion(doc *goquery.Document) string {
 	doctype := doc.Nodes[0].FirstChild.Data
 	if strings.Contains(doctype, "HTML 4.01") {
