@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import URLForm from './components/URLForm/URLForm';
 import ThemeToggle from './components/ThemeToggle/ThemeToggle';
+import URLTable from './components/URLTable/URLTable.tsx';
 
 const App = () => {
   return (
@@ -12,7 +13,15 @@ const App = () => {
             <ThemeToggle />
           </div>
           <Routes>
-            <Route path="/" element={<URLForm onSuccess={() => {}} />} />
+            <Route
+              path="/"
+              element={
+                <>
+                  <URLForm onSuccess={() => {}} />
+                  <URLTable />
+                </>
+              }
+            />
           </Routes>
         </div>
       </div>
