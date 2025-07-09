@@ -1,24 +1,22 @@
-import { useEffect } from 'react';
-import api from './api/api.ts';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import URLForm from './components/URLForm/URLForm';
+import ThemeToggle from './components/ThemeToggle/ThemeToggle';
 
 const App = () => {
-  const getData = async () => {
-    try {
-      const res = await api.get('/urls');
-      console.log('Data:', res.data);
-    } catch (error) {
-      console.error('API error:', error);
-    }
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
-
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    </>
+    <BrowserRouter>
+      <div className="bg-white text-zinc-900 dark:bg-zinc-900 dark:text-white min-h-screen w-full flex flex-col items-center px-4 py-8 transition-colors duration-300">
+        <div className="w-full max-w-3xl">
+          <div className="flex justify-between items-center mb-8">
+            <h1 className="text-3xl font-bold">🕸 Web Crawler Dashboard</h1>
+            <ThemeToggle />
+          </div>
+          <Routes>
+            <Route path="/" element={<URLForm onSuccess={() => {}} />} />
+          </Routes>
+        </div>
+      </div>
+    </BrowserRouter>
   );
 };
 

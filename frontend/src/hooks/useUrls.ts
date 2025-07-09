@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import api from '../api/api';
+import type { URLRecord } from '../types/types';
 
-export function useURLs() {
-  const [urls, setUrls] = useState<any[]>([]);
+const useURLs = () => {
+  const [urls, setUrls] = useState<URLRecord[]>([]);
   const [loading, setLoading] = useState(false);
 
   const fetch = async () => {
     try {
       setLoading(true);
-      const res = await api.get('/urls');
+      const res = await api.get<URLRecord[]>('/urls');
       setUrls(res.data);
     } catch (err) {
       console.error(err);
@@ -24,4 +25,6 @@ export function useURLs() {
   }, []);
 
   return { urls, fetch, loading };
-}
+};
+
+export default useURLs;
