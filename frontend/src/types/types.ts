@@ -15,8 +15,10 @@ export interface ResultData {
 
 export interface LinkData {
   id: string;
-  url: string;
+  href: string;
   status_code: number;
+  internal: boolean;
+  url_id: number | string;
 }
 
 export interface URLRecord {

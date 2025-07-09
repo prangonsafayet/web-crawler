@@ -53,18 +53,41 @@ func crawl(u models.URL) {
 	internal, external, broken := 0, 0, 0
 
 	doc.Find("a").Each(func(i int, s *goquery.Selection) {
-		href, _ := s.Attr("href")
-		if href == "" || strings.HasPrefix(href, "#") {
+		href, exists := s.Attr("href")
+		if !exists || href == "" {
+			return
+		}
+
+		if strings.HasPrefix(href, "#") ||
+			strings.HasPrefix(href, "javascript:") ||
+			strings.HasPrefix(href, "mailto:") ||
+			strings.HasPrefix(href, "tel:") {
 			return
 		}
 
 		fullURL := href
 		if strings.HasPrefix(href, "/") {
 			fullURL = "https://" + base + href
+		} else if strings.HasPrefix(href, "//") {
+			fullURL = "https:" + href
+		} else if !strings.HasPrefix(href, "http") {
+			return
+		}
+
+		alreadyAdded := false
+		for _, l := range links {
+			if l.Href == fullURL {
+				alreadyAdded = true
+				break
+			}
+		}
+		if alreadyAdded {
+			return
 		}
 
 		internalLink := strings.Contains(fullURL, base)
 		status := getStatus(fullURL)
+
 		if internalLink {
 			internal++
 		} else {

@@ -25,6 +25,7 @@ const URLDetail = () => {
     const fetchDetail = async () => {
       try {
         const res = await api.get<URLRecord>(`/urls/${id}`);
+        console.log('Fetched URL details:', res.data);
         setUrlData(res.data);
       } catch (err) {
         console.error('Failed to fetch URL details:', err);
@@ -45,7 +46,9 @@ const URLDetail = () => {
 
   const internal = urlData.results?.num_internal_links || 0;
   const external = urlData.results?.num_external_links || 0;
-  const brokenLinks = urlData.links?.filter((link: LinkData) => link.status_code >= 400) || [];
+
+  const brokenLinks = urlData.links?.filter((link: LinkData) => link.status_code !== 200) || [];
+  const activeLinks = urlData.links?.filter((link: LinkData) => link.status_code === 200) || [];
 
   return (
     <div className="max-w-4xl mx-auto mt-10 p-6 rounded-lg shadow bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white transition-colors duration-300">
@@ -72,7 +75,7 @@ const URLDetail = () => {
               plugins: {
                 legend: {
                   labels: {
-                    color: '#ffffff', // overridden by chart.js dark/light mode tweak
+                    color: '#ffffff',
                   },
                 },
               },
@@ -101,6 +104,24 @@ const URLDetail = () => {
         </div>
       </div>
 
+      {/* Link Summary */}
+      <div className="mt-10 bg-zinc-100 dark:bg-zinc-700 p-4 rounded shadow transition-colors duration-300">
+        <h3 className="text-lg font-semibold mb-3">Link Summary</h3>
+        <ul className="text-sm space-y-2">
+          <li>
+            <strong>Total Links:</strong> {urlData.links.length}
+          </li>
+          <li>
+            <strong>Active Links:</strong>{' '}
+            <span className="text-green-600 dark:text-green-400">{activeLinks.length}</span>
+          </li>
+          <li>
+            <strong>Broken Links:</strong>{' '}
+            <span className="text-red-600 dark:text-red-400">{brokenLinks.length}</span>
+          </li>
+        </ul>
+      </div>
+
       {/* Broken Links */}
       <div className="mt-10">
         <h3 className="text-lg font-semibold mb-3">Broken Links</h3>
@@ -109,8 +130,17 @@ const URLDetail = () => {
             <ul className="list-disc list-inside space-y-1">
               {brokenLinks.map((link) => (
                 <li key={link.id}>
-                  <span className="text-red-600 dark:text-red-400 break-words">{link.url}</span>{' '}
-                  <span className="text-gray-500 dark:text-gray-300">({link.status_code})</span>
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-red-600 dark:text-red-400 underline break-words"
+                  >
+                    {link.href || 'Unknown URL'}
+                  </a>{' '}
+                  <span className="text-gray-500 dark:text-gray-300">
+                    ({link.status_code}) – {link.internal ? 'Internal' : 'External'}
+                  </span>
                 </li>
               ))}
             </ul>
