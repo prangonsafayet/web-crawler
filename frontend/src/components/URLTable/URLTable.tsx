@@ -93,8 +93,16 @@ const URLTable = () => {
   });
 
   const rerunSelected = async () => {
-    const ids = Object.keys(rowSelection);
-    for (const id of ids) {
+    const selectedRows = table.getSelectedRowModel().rows;
+
+    for (const row of selectedRows) {
+      const id = row.original?.id;
+
+      if (!id) {
+        toast.error('Missing or invalid ID, skipping...');
+        continue;
+      }
+
       try {
         await api.post(`/urls/${id}/rerun`);
         toast.success(`Requeued ID ${id}`);
@@ -102,19 +110,29 @@ const URLTable = () => {
         toast.error(`Failed to requeue ID ${id}`);
       }
     }
+
     fetch();
   };
 
   const deleteSelected = async () => {
-    const ids = Object.keys(rowSelection);
-    for (const id of ids) {
+    const selectedRows = table.getSelectedRowModel().rows;
+
+    for (const row of selectedRows) {
+      const id = row.original?.id;
+
+      if (!id) {
+        toast.error('Missing or invalid ID, skipping...');
+        continue;
+      }
+
       try {
         await api.delete(`/urls/${id}`);
         toast.success(`Deleted ID ${id}`);
-      } catch {
+      } catch (err) {
         toast.error(`Failed to delete ID ${id}`);
       }
     }
+
     fetch();
   };
 

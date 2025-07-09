@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import URLForm from './components/URLForm/URLForm';
 import ThemeToggle from './components/ThemeToggle/ThemeToggle';
 import URLTable from './components/URLTable/URLTable.tsx';
+import URLDetail from './components/URLDetail/URLDetail.tsx';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
                 </>
               }
             />
+            <Route path="/url/:id" element={<URLDetail />} />
           </Routes>
         </div>
       </div>
