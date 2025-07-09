@@ -16,7 +16,6 @@ A full-stack web crawler that analyzes website URLs and displays structured data
 - **Frontend**: React (Vite, TypeScript, Tailwind CSS, Chart.js, TanStack Table)  
 - **Backend**: Golang (Gin, GORM, goquery)  
 - **Database**: MySQL 8  
-- **Proxy**: Nginx  
 - **Containerized**: Docker & Docker Compose  
 
 ---
