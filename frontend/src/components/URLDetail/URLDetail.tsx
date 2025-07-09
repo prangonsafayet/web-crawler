@@ -25,7 +25,6 @@ const URLDetail = () => {
     const fetchDetail = async () => {
       try {
         const res = await api.get<URLRecord>(`/urls/${id}`);
-        console.log('Fetched URL details:', res.data);
         setUrlData(res.data);
       } catch (err) {
         console.error('Failed to fetch URL details:', err);

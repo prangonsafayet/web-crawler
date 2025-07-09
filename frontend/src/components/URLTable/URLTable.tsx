@@ -40,6 +40,7 @@ const URLTable = () => {
                 input.indeterminate =
                   table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected();
             }}
+            onClick={(e) => e.stopPropagation()}
             onChange={table.getToggleAllRowsSelectedHandler()}
           />
         ),
@@ -47,6 +48,7 @@ const URLTable = () => {
           <input
             type="checkbox"
             checked={row.getIsSelected()}
+            onClick={(e) => e.stopPropagation()}
             onChange={row.getToggleSelectedHandler()}
           />
         ),
@@ -55,10 +57,7 @@ const URLTable = () => {
         accessorKey: 'url',
         header: 'URL',
         cell: (info) => (
-          <span
-            className="text-blue-600 dark:text-blue-400 underline cursor-pointer break-all"
-            onClick={() => navigate(`/url/${info.row.original.id}`)}
-          >
+          <span className="text-blue-600 dark:text-blue-400 underline cursor-pointer break-all">
             {info.getValue() as string}
           </span>
         ),
@@ -123,7 +122,7 @@ const URLTable = () => {
       }
     }
 
-    fetch(); // Re-fetch after re-running
+    fetch();
   };
 
   const deleteSelected = async () => {
@@ -145,7 +144,7 @@ const URLTable = () => {
       }
     }
 
-    fetch(); // Re-fetch after deletion
+    fetch();
   };
 
   if (loading) {
@@ -203,7 +202,8 @@ const URLTable = () => {
               {table.getRowModel().rows.map((row) => (
                 <tr
                   key={row.id}
-                  className="hover:bg-zinc-50 dark:hover:bg-zinc-600 transition-colors duration-200"
+                  className="hover:bg-zinc-50 dark:hover:bg-zinc-600 cursor-pointer transition-colors duration-200"
+                  onClick={() => navigate(`/url/${row.original.id}`)}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <td
